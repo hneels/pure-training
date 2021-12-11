@@ -1,0 +1,45 @@
+{% load static %}
+<!--default template to display workout Sessions on any page of this app-->
+
+<!--Div for each Workout Session-->
+{% for session in data.sessions %}
+    <div class="card container session-card">
+        <div class="row card-header">
+            <div class="col">
+                Client: {{ session.routine.client }} <br>
+                Trainer: {{ session.trainer }} <br>
+                Routine: {{ session.routine }} <br>
+                Time: {{ session.timestamp }} <br>
+                Session #{{ session.pk }}
+            </div>
+            <div class="col">
+                {% if user.is_staff %}
+                    <form action="{% url 'editsession' %}" method="get">
+                        <input hidden name="sessionpk" value="{{session.pk}}">
+                        <input type="submit" class="float-right btn btn-sm btn-outline-danger" value="Edit">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row card-body">
+            {% for group in session.setgroups.all %}
+                <div class="col-6 exercise-div">
+                    <span class="group-title">
+                        {% if group.order %}
+                            {{ group.order }} .
+                        {% endif %}
+                        {{ group }}
+                    </span><br>
+                    {% if group.note %}
+                        <i>Note: {{ group.note }}</i>
+                    {% endif %}
+                    {% for set in group.sets.all %}
+                        <div>
+                            Set {{ set.setnum }}: {{ set.weight }} for {{ set.time }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

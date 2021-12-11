@@ -1,0 +1,138 @@
+body, html {
+    height: 95%;
+  }
+
+.nav-link {
+    color: #B50000 !important;
+}
+
+.red-link {
+    color: #B50000 !important;
+}
+
+.pic-div {
+    background-image: url('/static/train/background.jpg');
+    background-size: cover;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 0px) {
+    .login-div {
+        width: 95%;
+        border-radius: 10px;
+        padding: 15px;
+        background: white;
+        text-align: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .login-div {
+        width: 500px;
+        border-radius: 10px;
+        padding: 15px;
+        background: white;
+        text-align: center;
+    }
+}
+
+.error {
+    margin: 40px;
+    color: gray;
+    text-align: center;
+    font-size: 20px;
+}
+
+.set-group {
+    margin: 5px;
+    padding: 15px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+.finish {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.group-title {
+    color: #B50000;
+    font-weight: bold;
+}
+
+.exercise-div {
+    padding: 10px;
+}
+
+.session-card {
+    width: 99%;
+    margin: 15px 7px 15px;
+    border-radius: 10px;
+}
+
+.card-header {
+    background-color: #E8E8E8;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    font-weight: 500;
+}
+
+.card-body {
+    background-color: #F5F5F5;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.select-box {
+    width: 99%;
+    margin: 15px 7px 15px;
+}
+
+.exercise-table {
+    width: 80%;
+}
+
+th, td {
+    padding: 5px;
+}
+
+.update-title {
+    color: #B50000;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.hover-row {
+    cursor: pointer;
+}
+
+.check-label {
+    padding: 3px;
+}
+
+#showdiv {
+    margin-right: 5px;
+}
+
+.pag-align {
+    margin-bottom: 0;
+}
+
+.fake-link {
+    padding: 10px;
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;;
+}
+
+.fake-link:hover {
+    cursor: pointer;
+    background-color: #E0E0E0;
+    overflow: auto;
+}

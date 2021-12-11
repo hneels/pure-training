@@ -1,0 +1,19 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+New Session
+{% endblock %}
+<!--Trainer view: start a new workout Session (clicking Create takes you to newsession2.html)-->
+{% block body %}
+    <div class="container">
+        <div class="set-group">
+            <h3> Start A New Workout Session</h3>
+            <form action="{% url 'newsession' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-danger" value="Create">
+            </form>
+        </div>
+    </div>
+{% endblock %}

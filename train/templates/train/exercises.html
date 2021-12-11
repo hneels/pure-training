@@ -1,0 +1,56 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Create Exercise
+{% endblock %}
+<!--Trainer view: create/delete exercises-->
+{% block body %}
+    <div class="container">
+        <!--New Exercise Form-->
+        <div class="set-group">
+            <h3>Create a New Exercise</h3>
+            <form action="{% url 'exerciseview' %}" method="post">
+                {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-danger" value="Create">
+            </form>
+        </div>
+        <!--Table of all existing exercises-->
+        <div class="set-group">
+            <div class="row">
+                <div class="col">
+                    <h3>All Exercises</h3>
+                </div>
+                <div class="col">
+                    <i>Exercises cannot be deleted once used in a Routine</i>
+                </div>
+            </div>
+            <table class="table table-hover">
+                <tr>
+                    <th>Exercise</th>
+                    <th>Body Part</th>
+                    <th></th>
+                </tr>
+                {% for exercise in exerciselist %}
+                    <tr id="row-{{ exercise.pk }}">
+                        <td>{{ exercise.name }}</td>
+                        <td>{{ exercise.get_body_part_display }} </td>
+                            <!--Not sure why this logic works and not the reverse, but button 
+                                should be disabled if exercise already exists in routine-->
+                            {% if exercise.routines.all %}
+                                <td> <button hidden class="delete btn btn-sm btn-outline-danger"></button></td>
+                            {% else %}
+                                <td> <button data-exercise="{{exercise.pk}}" class="delete btn btn-sm btn-outline-danger">
+                                    Delete</button></td>
+                            {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static "train/exercises.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}Register {% endblock %}
+
+<!--Page for new users to register-->
+{% block body %}
+<div class="pic-div">
+        <div class="login-div">
+            {% if message %}
+                    <div>{{ message }}</div>
+            {% endif %}
+
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" type="text" name="first" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="last" placeholder="Last Name" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" required>
+                </div>
+                <input class="btn btn-secondary" type="submit" value="Register">
+            </form>
+
+            Already have an account? <a class="red-link" href="{% url 'login' %}">Log In here.</a>
+        </div>
+    </div>
+
+{% endblock %}

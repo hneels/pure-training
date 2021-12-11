@@ -1,0 +1,24 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Progress
+{% endblock %}
+<!--Client view: list of all exercises ever performed, clicking shows history of sets-->
+{% block body %}
+    <div class="container">
+        <div class="set-group">
+            <h3>Exercises</h3>
+            {% for exercise in exercises %}
+                <div class="fake-link" data-exercise="{{exercise.pk}}">
+                    <span class="group-title">{{ exercise }}</span>
+                </div>
+                <div class="popdown" id="popdown-{{exercise.pk}}"></div>
+            {% endfor%}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'train/clientprogress.js' %}"></script>
+{% endblock %}

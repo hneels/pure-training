@@ -1,0 +1,20 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Error
+{% endblock %}
+<!--Error page: shown when a user attempts to access any unauthorized resource-->
+{% block body %}
+    <div class="container">
+        <div class="error">
+            Sorry, something went wrong.
+                {% if message %}
+                    {{ message }}
+                {% endif %}
+            <br>
+            <a class="red-link" href="{% url 'index' %}">Go Home</a>
+            
+        </div>
+    </div>
+{% endblock %}

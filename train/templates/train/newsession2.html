@@ -1,0 +1,117 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+{{ session.routine.client }}'s Session
+{% endblock %}
+
+<!--Trainer view: form to submit Session workout data-->
+{% block body %}
+
+<div class="container">
+    <!-- previous session card -->
+    {% if prevsession is not None %}
+        <div class="card container session-card">
+            <div class="row card-header">
+                <div class="col">
+                    <b>{{ prevsession.routine.client }}'s previous {{ prevsession.routine.name }}
+                    on {{ prevsession.timestamp }} </b>
+                </div>
+            </div>
+            <div class="row card-body">
+                {% for group in prevsession.setgroups.all %}
+                    <div class="col-6 exercise-div">
+                        <span class="group-title">
+                            {% if group.order %}
+                                {{ group.order }} .
+                            {% endif %}
+                            {{ group }}
+                        </span>
+                        <br>
+                        {% if group.note %}
+                            <i>Note: {{ group.note }}</i>
+                        {% endif %}
+                        {% for set in group.sets.all %}
+                            <div>
+                                Set {{ set.setnum }}: {{ set.weight }} for {{ set.time }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    
+    <!--Set Group Header-->
+    {% for group in setgroups %}
+        <div class="set-group">
+            <div class="row">
+                <div class="col">
+                    <h5>{{ group }}</h5>
+                </div>
+            </div>
+            <div class="form-row" id="row-{{group.pk}}">
+                <div class="col-2">
+                    <input id="order-{{group.pk}}" type="text" class="form-control form-control-sm" placeholder="Exercise Order">
+                </div>
+                <div class="col-8">
+                    <input id="note-{{group.pk}}" type="text" class="form-control form-control-sm" placeholder="Note: upper Kaatsu, lower Kaatsu, etc.">
+                </div>
+                <div class="col">
+                    <button data-setgroup="{{group.pk}}" class="setgroupinfo btn btn-sm btn-outline-danger">Save</button>
+                </div>
+            </div>
+            <!--Set Form Rows-->
+            {% for i in n %}
+                <hr>
+                <div class="form-row" id="row-{{group.pk}}-{{i}}">
+                    <div class="col-2">
+                        <input id="setnum-{{group.pk}}-{{i}}" type="number" class="form-control form-control-sm" value="{{i}}" disabled>
+                    </div>
+                    <div class="col-4">
+                        <input id="weight-{{group.pk}}-{{i}}" type="text" class="form-control form-control-sm" placeholder="Weight or Band">
+                    </div>
+                    <div class="col-4">
+                        <input id="time-{{group.pk}}-{{i}}" type="text" class="form-control form-control-sm" placeholder="0 min 0 sec">
+                    </div>
+                    <div class="col">
+                        <button data-setgroup="{{group.pk}}" data-row="{{i}}"
+                        class="addset btn btn-sm btn-outline-danger">Save</button>
+                    </div>
+                </div>
+            {% endfor %}
+            <!--Section for extra SETS of each exercise-->
+            <hr>
+            <div id="xtrasets-{{group.pk}}"></div>
+            <button data-numrows=3 data-grouppk={{group.pk}}
+            class="appendrow float-right btn btn-sm btn-secondary">Add Another Set</button>
+        </div>
+    {% endfor %}
+
+    <!--Option to add exercises to routine-->
+    <!--Empty Div to append new exercise setgroups-->
+    <div id="moreexercises"></div>
+    <!--Hidden div with exercise Select-->
+    <div class="set-group" id="dropdowndiv">
+        <select class="custom-select" id="exercise-select" name="client" data-session="{{session.pk}}">
+            <option selected="true" disabled>Select Exercise</option>
+            {% for exercise in exercises %}
+                <option value="{{exercise.pk}}">{{exercise}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <!--Buttons-->
+    <div class="set-group">
+        <div class="row justify-content-end">
+            <button id="showdiv" class="btn btn-warning float-right">Add Exercise</button>
+            <button data-sessionpk="{{session.pk}}" class="delete btn btn-secondary float-right">Delete</button>
+            <button data-sessionpk="{{session.pk}}" class="finish btn btn-danger float-right">Complete</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script type="module" src="{% static 'train/helpers.js' %}"></script>
+    <script type="module" src="{% static 'train/newsession2.js' %}"></script>
+{% endblock %}

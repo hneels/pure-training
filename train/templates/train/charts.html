@@ -1,0 +1,31 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Charts
+{% endblock %}
+<!--Trainer view: form to show all charts for any selected client-->
+{% block body %}
+    <div class="container">
+
+        <div class="container select-box">
+            <form url="{% url 'charts' %}" id="select-form">
+                <div class="form-group row">
+                    <select class="custom-select" id="client-select" name="client">
+                        <option selected="true" disabled>Select Client</option>
+                        {% for user in users %}
+                            <option value="{{user.pk}}">{{user.first_name}} {{user.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+
+    {% include "train/charttemplate.html" %}
+    {% include "train/paginate-charts.html" %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'train/charts.js' %}"></script>
+{% endblock %}

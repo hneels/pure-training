@@ -1,0 +1,39 @@
+{% load static %}
+
+<!--Pagination navigation: FOR client portal : ROUTINES page-->
+<nav aria-label="Page navigation">
+    <ul class="pagination pag-align float-right">
+        {% if data.prev_page > 0 %}
+            <li class="page-item">
+                <form url="{% url 'charts' %}" id="prev-form">
+                    <!--If a specific client was selected: retain that value for POST request-->
+                    {% if routine %}
+                        <input type="hidden" name="routine" value={{routineobj.pk}}>
+                    {% endif %}
+                    <input type="hidden" name="pnum" value={{data.prev_page}}>
+                    <button type="submit" class="page-link" id="prev-link" >Previous</button></li>
+                </form>
+        {% else %}
+            <!-- disabled previous button if page 1 -->
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span></li>
+        {% endif %}
+            <li class="page-item active" aria-current="page">
+                <span class="page-link"> {{ data.pnum }} </span></li>
+        {% if data.has_next %}
+            <li class="page-item">
+                <form url="{% url 'charts' %}" id="next-form">
+                    <!--If a specific client was selected: retain that value for POST request-->
+                    {% if routine %}
+                        <input type="hidden" name="routine" value={{routineobj.pk}}>
+                    {% endif %}
+                    <input type="hidden" name="pnum" value={{data.next_page}}>
+                    <button type="submit" class="page-link" id="next-link">Next</button></li>
+                </form>
+        {% else %}
+            <!-- disabled next button if last page -->
+            <li class="page-item disabled">
+                <span class="page-link">Next</span></li>
+        {% endif %}
+    </ul>
+</nav>

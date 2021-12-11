@@ -1,0 +1,30 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+    <div class="pic-div">
+        <div class="login-div">
+            {% if message %}
+                <div>{{ message }}</div>
+            {% endif %}
+
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+                <input class="btn btn-secondary" type="submit" value="Login">
+            </form>
+            New Client? <a class="red-link" href="{% url 'register' %}">Register here.</a>
+        </div>
+    </div>
+
+    
+{% endblock %}

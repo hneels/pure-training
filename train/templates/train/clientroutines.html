@@ -1,0 +1,51 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Charts
+{% endblock %}
+<!--Client view: See all past workout Sessions for a selected Routine-->
+{% block body %}
+    <div class="container">
+        <!--Select dropdown-->
+        <div class="container select-box">
+            <form url="{% url 'clientroutines' %}" id="select-form">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <select class="custom-select" id="client-select" name="routine">
+                        <option selected="true" disabled>Select Routine</option>
+                        {% for routine in routines %}
+                            <option value="{{routine.pk}}">{{routine}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+    <!--A selected Routine with exercises-->
+    {% if routineobj %}
+            <div class="container set-group">
+                <div class="row">
+                    <div class="col">
+                        <span class="group-title">Name: </span>{{routineobj.name}}<br>
+                        <span class="group-title">Started: </span>{{routineobj.startdate}}<br>
+                    </div>
+                    <div class="col">
+                        <span class="group-title">Exercises: </span>
+                        {% for exercise in routineobj.exercises.all %}
+                            <br>
+                            {{ exercise }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    <!--Sessions-->
+    {% include "train/charttemplate.html" %}
+    {% include "train/paginate-client.html" %}
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'train/charts.js' %}"></script>
+{% endblock %}

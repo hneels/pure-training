@@ -1,0 +1,98 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Edit Session
+{% endblock %}
+
+<!--Form to edit a previously submitted workout Session (prepopulated with values)-->
+{% block body %}
+    <div class="container">
+    <!--Info about workout-->
+        <div class="set-group">
+            <div class="update-title">Update Workout Session {{session.pk}}</div>
+            <div class="row">
+                <div class="col">
+                    Client: {{session.routine.client}} <br>
+                    Trainer: {{session.trainer}} <br>
+                </div>
+                <div class="col">
+                    Routine: {{session.routine}} <br>
+                    Time: {{session.timestamp}}
+                </div>
+            </div>
+        </div>
+        <!--Set Group Header-->
+        {% for group in session.setgroups.all %}
+            <div class="set-group">
+                <div class="row">
+                    <div class="col">
+                        <h5>{{ group }}</h5>
+                    </div>
+                </div>
+                <div class="form-row" id="row-{{group.pk}}">
+                    <div class="col-2">
+                        <input id="order-{{group.pk}}" type="text" class="form-control form-control-sm" value="{{group.order}}">
+                    </div>
+                    <div class="col-8">
+                        <input id="note-{{group.pk}}" type="text" class="form-control form-control-sm" value="{{group.note}}">
+                    </div>
+                    <div class="col">
+                        <button data-setgroup="{{group.pk}}" class="setgroupinfo btn btn-sm btn-outline-danger">Update</button>
+                    </div>
+                </div>
+                <!--Set Form Rows-->
+                {% for set in group.sets.all %}
+                    <hr>
+                    <div class="form-row" id="row-{{set.pk}}">
+                        <div class="col-2">
+                            <input id="setnum-{{set.pk}}" type="number" class="form-control form-control-sm" value="{{set.setnum}}" disabled>
+                        </div>
+                        <div class="col-4">
+                            <input id="weight-{{set.pk}}" type="text" class="form-control form-control-sm" value="{{set.weight}}">
+                        </div>
+                        <div class="col-4">
+                            <input id="time-{{set.pk}}" type="text" class="form-control form-control-sm" value="{{set.time}}">
+                        </div>
+                        <div class="col">
+                            <button data-setpk="{{set.pk}}"
+                            class="updateset btn btn-sm btn-outline-danger">Update</button>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!--Section for extra SETS of each exercise-->
+                <hr>
+                <div id="xtrasets-{{group.pk}}"></div>
+                <button data-numrows={{group.sets.count}} data-grouppk={{group.pk}}
+                class="appendrow float-right btn btn-sm btn-secondary">Add Another Set</button>
+
+            </div>
+        {% endfor %}
+
+    <!--Option to add exercises to routine-->
+    <!--Empty Div to append new exercise setgroups-->
+    <div id="moreexercises"></div>
+    <!--Hidden div with exercise Select-->
+    <div class="set-group" id="dropdowndiv">
+        <select class="custom-select" id="exercise-select" name="client" data-session="{{session.pk}}">
+            <option selected="true" disabled>Select Exercise</option>
+            {% for exercise in exercises %}
+                <option value="{{exercise.pk}}">{{exercise}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <!--Buttons-->
+    <div class="set-group">
+        <div class="row justify-content-end">
+            <button id="showdiv" class="btn btn-warning float-right">Add Exercise</button>
+            <button data-sessionpk="{{session.pk}}" class="delete btn btn-secondary float-right">Delete</button>
+            <button data-sessionpk="{{session.pk}}" class="finish btn btn-danger float-right">Done</button>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script type="module" src="{% static 'train/helpers.js' %}"></script>
+    <script type="module" src="{% static 'train/editsession2.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "train/layout.html" %}
+{% load static %}
+
+{% block title %}
+All Sessions
+{% endblock %}
+<!--Home page for both trainers and clients-->
+{% block body %}
+
+<div class="container">
+    {% include "train/charttemplate.html" %}
+    {% include "train/pagetemplate.html" %}
+</div>
+
+{% endblock %}
