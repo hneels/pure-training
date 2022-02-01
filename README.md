@@ -1,6 +1,8 @@
 TRAINING by PURE: A WORKOUT TRACKING APPLICATION FOR PERSONAL TRAINERS AND THEIR CLIENTS
 Completed April 2021
 
+video demo HERE: https://youtu.be/m3ON8CZSg8o
+
 This project is a web-based application for personal trainers and other fitness professionals to log and track progress of strength training workouts. The application is designed so that multiple trainers, working together, can document their clients' workouts and share client charts for virtual/Zoom sessions, without the arduous process of scanning and emailing paper workout charts back and forth. Though the site could easily be used for in-person workouts, its main benefit is for clients who train virtually. Additionally, the app is designed so that clients can log in to their personal portal and view their past workout sessions, routines, and strength progress on specific exercises, motivating them to continue work with their personal trainer as they see positive results.
 
 To view pages in this website, a user must be logged in, because the functionality/view of the application depends on whether the user is a trainer or a client. A user is a trainer if they are denoted as "staff", which can be changed through the Django admin interface. Besides user access level, all the other models for this site can be manipulated by trainers through the actual website, without needing to access the admin interface. 
