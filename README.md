@@ -3,8 +3,7 @@ Completed April 2021
 
 **video demo here:** https://youtu.be/m3ON8CZSg8o
 
-## Tech Stack
-Python, Django, SQLite, JavaScript with fetch API, HTML & CSS
+**Tech Stack:** Python, Django, SQLite, JavaScript with fetch API, HTML & CSS
 
 ## Intro
 This project is a web-based application for personal trainers and other fitness professionals to log and track progress of strength training workouts. The application is designed so that multiple trainers, working together, can document their clients' workouts and share client charts for virtual/Zoom sessions, without the arduous process of scanning and emailing paper workout charts back and forth. Though the site could easily be used for in-person workouts, its main benefit is for clients who train virtually. Additionally, the app is designed so that clients can log in to their personal portal and view their past workout sessions, routines, and strength progress on specific exercises, motivating them to continue work with their personal trainer as they see positive results.
