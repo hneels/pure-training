@@ -1,14 +1,20 @@
-TRAINING by PURE: A WORKOUT TRACKING APPLICATION FOR PERSONAL TRAINERS AND THEIR CLIENTS
+# TRAINING by PURE: A WORKOUT TRACKING APPLICATION FOR PERSONAL TRAINERS AND THEIR CLIENTS
 Completed April 2021
 
-video demo HERE: https://youtu.be/m3ON8CZSg8o
+**video demo here:** https://youtu.be/m3ON8CZSg8o
 
+## Tech Stack
+Python, Django, SQLite, JavaScript with fetch API, HTML & CSS
+
+## Intro
 This project is a web-based application for personal trainers and other fitness professionals to log and track progress of strength training workouts. The application is designed so that multiple trainers, working together, can document their clients' workouts and share client charts for virtual/Zoom sessions, without the arduous process of scanning and emailing paper workout charts back and forth. Though the site could easily be used for in-person workouts, its main benefit is for clients who train virtually. Additionally, the app is designed so that clients can log in to their personal portal and view their past workout sessions, routines, and strength progress on specific exercises, motivating them to continue work with their personal trainer as they see positive results.
 
 To view pages in this website, a user must be logged in, because the functionality/view of the application depends on whether the user is a trainer or a client. A user is a trainer if they are denoted as "staff", which can be changed through the Django admin interface. Besides user access level, all the other models for this site can be manipulated by trainers through the actual website, without needing to access the admin interface. 
 
+### Django Models
 For purposes of understanding this application, the following model definitions will be useful. All of these models are defined in "models.py". An "Exercise" is a single given exercise such as squat, deadlift, bicep curl, etc. It is not an instance of an actual exercise performed during a workout, but rather an abstract definition on which to base a routine. An Exercise has a body part (choices limited to back, chest, arms, shoulders, legs, core, and other) and a name. A "Routine" is a preset pattern of exercises, like a blueprint on which to base a workout. For example, a typical routine might be "squat, dumbbell row, chest press, plank, arnold press". A Routine also has a name to differentiate it from the others, a client to whom the routine belongs, a start date (whenever it was created), and an "archived" boolean--describing whether the Routine is actively being used in the workout cycle and should be included as an option to base a workout Session upon. A "Session" is an instance of a workout, performed by a client and logged by a trainer. It is based on a routine (e.g. all sets performed will be derived from the Routine blueprint), a timestamp (exact datetime at which the workout session occurred), and a trainer (must be specified because the app can have multiple trainers). A "Setgroup" is a group of sets of one specific exercise, belonging to a workout Session. This is a way to group the Sets of an exercise. A Setgroup has an Exercise, a Session which it's a part of, a Note (for example if a superset, drop set, or blood flow occlusion technique was used) and an order (which order in the workout Session it occurred). Finally, a Set is one instance of an exercise performed-- for example, 12 reps of squat with 135 lb. Each Set has a weight, time or number of reps, and order within Setgroup(set 1, set 2, set 3). The weight and time fields are intentionally stored as strings, not ints, because sometimes a trainer might want to record time (1 min 30 seconds of plank) vs sometimes they might record reps. Sometimes they might want to record bands or bodyweight (e.g. red band for band pull-aparts) vs traditional barbell weights. Every Set belongs to a Setgroup, which belongs to a workout Session, which belongs to a Routine, which belongs to a Client. The Set and Session models also have Serialize methods defined for API requests.
 
+### Trainer Views
 The following pages are visible for users who are logged in as trainers (accessible through the navbar at top):
 
 -Index (Home) page: this is the default view when a trainer logs in. This page shows all workout Sessions for all clients, in reverse chronological order. This page (along with any page displaying workout Sessions) has pagination showing 10 Sessions at a time. It is rendered by the following files: "index.html", "charttemplate.html", "pagetemplate.html"
@@ -23,7 +29,7 @@ The following pages are visible for users who are logged in as trainers (accessi
 
 -Charts: this view shows all past workout sessions for a client (e.g. their "chart".) Clicking this page initially shows all workout sessions for all clients, similar to the index page. Upon selecting a client from the select dropdown, the page loads all workout sessions for just that client, in reverse chronological order. Like the index page, this page has pagination, with the added feature that clicking the "next" or "previous" page retains the specific client's chart the trainer is trying to view. This page is rendered with the following files: "charts.html", "charttemplate.html", "paginate-charts.html", "static/train/charts.js".
 
-
+### Client Views
 The following pages are visible for users who are logged in as clients:
 
 -Home/Index page: like the trainer home page, this shows all sessions in reverse chronological order, except here it only shows Sessions belonging to the client who is logged in. It's rendered by the same files as the trainer index page.
@@ -32,8 +38,11 @@ The following pages are visible for users who are logged in as clients:
 
 -Strength Progress: this page allows a client to see their progress over time on any given Exercise. Clicking this displays a list of all Exercises, limited to those the client has ever actually performed Setgroups of. Upon clicking any exercise in the list, the div expands to show the history (reverse chronological order) of all Sets of that exercise the client has ever done. Upon clicking another exercise, that table is hidden and the information for the new exercise is displayed. All of this information is fetched with javascript, without ever reloading the page. This page is rendered by the following files: "clientprogress.html", "static/train/clientprogress.js"
 
+### Unauthenticated Views
 The only pages that are visible to users who are not logged in are the login page (rendered by "login.html"), logout page ("logout.html"), and register page ("register.html"). All of these pages are designed to mimic the look of a professional website, with images advertising the company gym. Additionally, the Error page (rendered by "error.html") is displayed anytime a request malfunctions--for example if a trainer somehow tries to access or edit a Workout Session that does not exist.
 
+### Responsive Design
 Additionally, the site is mobile-responsive, designed using Bootstrap. Many aspects of the page, including the top nav-bar and columns, automatically resize or change their layout depending on the size of the viewport. Professional-looking styling has been added using Bootstrap and CSS ("static/train/styles.css")
 
-This project is far more complex than any other in the CS50 Web course, containing multiple complex interrelated models, 20 different HTML templates, eight javascript files to reduce redundancy and reloading of pages, 26 functions in the "views.py" file including 11 API routes for javascript requests. Moreover, this application was designed to be practically useful for a real small business, with great attention to features that would make the site practical and functional for real users. Currently, you can run this application by typing "python manage.py runserver" into the terminal command line, though I hope to host the site on a live web server soon.
+### Summary
+This is the most complex project I have designed as of April 2021, containing multiple complex interrelated models, 20 different HTML templates, eight javascript files to reduce redundancy and reloading of pages, 26 functions in the "views.py" file including 11 API endpoints for javascript requests. Moreover, this application was designed to be practically useful for a real small business, with great attention to features that would make the site practical and functional for real users. Currently, you can run this application by typing "python manage.py runserver" into the terminal command line, though I hope to host the site on a live web server soon.
