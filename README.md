@@ -1,4 +1,4 @@
-# TRAINING by PURE: A WORKOUT TRACKING APPLICATION FOR PERSONAL TRAINERS AND THEIR CLIENTS
+# Pure Training: a workout tracking application for personal trainers and their clients
 Completed April 2021
 
 **video demo here:** https://youtu.be/m3ON8CZSg8o
