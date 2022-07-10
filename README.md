@@ -1,5 +1,5 @@
 # Pure Training: a workout tracking application for personal trainers and their clients
-Completed April 2021
+Completed April 2021 (solo project)
 
 
 ## Tech Stack:
@@ -23,6 +23,15 @@ Completed April 2021
 This project is a web application for personal trainers and other fitness professionals to log and track progress of strength training workouts. The application is designed so that multiple trainers, working together, can document their clients' workouts and share client charts for virtual/Zoom sessions. Though the site could easily be used for in-person workouts, its main benefit is for clients who train virtually. Additionally, the app is designed so that clients can log in to their personal portal and view their past workout sessions, routines, and strength progress on specific exercises, motivating them to continue work with their personal trainer as they see positive results.
 
 To view pages in this website, a user must be logged in, because the functionality of the application depends on whether the user is a trainer or a client. A user is a trainer if they are denoted as "staff", which can be changed through the Django admin interface. Besides user access level, all the other models for this site can be manipulated by trainers through the actual website, without needing to access the admin interface. 
+
+### How to Run
+1. Clone this repository, navigate to the project and type the following commands:
+2. Activate a virtual environment: 'python3 -m venv .venv'
+3. Install dependencies: 'pip install -r requirements.txt'
+4. Run the project: 'python3 manage.py runserver'
+5. log in as a trainer to log sessions and routines:
+* username: 'testuser'
+* password: 'test'
 
 ### Django Models
 For purposes of understanding this application, the following model definitions will be useful. All of these models are defined in "models.py". An "Exercise" is a single given exercise such as squat, deadlift, bicep curl, etc. It is not an instance of an exercise performed during a workout, but rather an abstract definition on which to base a routine. An Exercise has a body part (choices limited to back, chest, arms, shoulders, legs, core, and other) and a name. A "Routine" is a pre-set pattern of exercises, like a blueprint on which to base a workout. For example, a typical routine might be "squat, dumbbell row, chest press, plank, arnold press". A Routine also has a name to differentiate it from the others, a client to whom the routine belongs, a start date (whenever it was created), and an "archived" boolean--describing whether the Routine is actively being used in the workout cycle and should be included as an option to base a workout Session upon. A "Session" is an instance of a workout, performed by a client and logged by a trainer. It is based on a routine (e.g. all sets performed will be derived from the Routine blueprint), a timestamp (exact datetime at which the workout session occurred), and a trainer (must be specified because the app can have multiple trainers). A "Setgroup" is a group of sets of one specific exercise, belonging to a workout Session. This is a way to group the Sets of an exercise. A Setgroup has an Exercise, a Session which it's a part of, a Note (for example if a superset, drop set, or blood flow occlusion technique was used) and an order (which order in the workout Session it occurred). Finally, a Set is one instance of an exercise performed-- for example, 12 reps of squat with 135 lb. Each Set has a weight, time or number of reps, and order within Setgroup(set 1, set 2, set 3). The weight and time fields are intentionally stored as strings, not ints, because sometimes a trainer might want to record time (1 min 30 seconds of plank) vs sometimes they might record reps. Sometimes they might want to record bands or bodyweight (e.g. red band for band pull-aparts) vs traditional barbell weights. Every Set belongs to a Setgroup, which belongs to a workout Session, which belongs to a Routine, which belongs to a Client. The Set and Session models also have Serialize methods defined for API requests.
@@ -58,4 +67,4 @@ The only pages that are visible to users who are not logged in are the login pag
 The site is mobile-responsive, designed using Bootstrap. Many aspects of the page, including the top nav-bar and columns, automatically resize or change their layout depending on the size of the viewport. Professional-looking styling has been added using Bootstrap and CSS ("static/train/styles.css")
 
 ### Summary
-This was my most complex project as of April 2021, containing multiple interrelated database models, 20 HTML templates, eight JavaScript files to minimize page reloads, and 26 functions in the "views.py" file including 11 API endpoints for asynchronous JavaScript requests. Moreover, this application was designed to be practically useful for a real small business, with great attention to features that would make the site practical and functional for real users. Presently you can run this application by typing "python manage.py runserver" into the terminal command line.
+This was my most complex project as of April 2021, containing multiple interrelated database models, 20 HTML templates, eight JavaScript files to minimize page reloads, and 26 functions in the "views.py" file including 11 API endpoints for asynchronous JavaScript requests. Moreover, this application was designed to be practically useful for a real small business, with great attention to features that would make the site practical and functional for real users.
