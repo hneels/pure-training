@@ -26,7 +26,7 @@ To view pages in this website, a user must be logged in, because the functionali
 
 ### How to Run
 1. Clone this repository, navigate to the project and type the following commands:
-2. Activate a virtual environment: 'python3 -m venv .venv'
+2. Activate a virtual environment: 'python3 -m venv .venv' and select the virtual environment as the active workspace
 3. Install dependencies: 'pip install -r requirements.txt'
 4. Run the project: 'python3 manage.py runserver'
 5. log in as a trainer to log sessions and routines:
